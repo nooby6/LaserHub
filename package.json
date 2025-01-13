@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "next.js": "^1.0.3"
+    "next.js": "^1.0.3",
+    "prisma": "^6.2.1"
   }
 }
