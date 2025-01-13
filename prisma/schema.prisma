@@ -13,17 +13,41 @@ datasource db {
 }
 
 model Admin {
-  id String @id
+  id       String @id
   username String @unique
 }
 
-model Student{}
+model Student{
+    id       String @id
+  username String @unique
+  email    String
+  name     String
+  Surname String?
+  password String
+  address String?
+  phone    String?
+  img String
+  bloodType String
+}
+
 model Teacher{}
+
 model Parent{}
+
 model Year{}
+
 model Lesson{}
+
 model Assignment{}
+
 model Attendance{}
+
 model Results{}
+
 model exam{}
+
 model Subject{}
+
+model Events{}
+
+model Announcement{}
