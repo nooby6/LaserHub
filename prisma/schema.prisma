@@ -18,36 +18,55 @@ model Admin {
 }
 
 model Student{
-    id       String @id
+  id       String @id
   username String @unique
-  email    String
+  email    String?
   name     String
-  Surname String?
+  Surname  String
   password String
-  address String?
+  address  String?
   phone    String?
-  img String
+  img      String
   bloodType String
+  gender    UserGender
+  createdAt DateTime @default(now())
+
 }
 
-model Teacher{}
+// model Teacher{}
 
-model Parent{}
+model Parent{
+  id       String @id
+  username String @unique
+  email    String?
+  name     String
+  Surname  String?
+  password String
+  address  String?
+  phone    String
+  img      String?
+  createdAt DateTime @default(now())
+}
 
-model Year{}
+// model Year{}
 
-model Lesson{}
+// model Lesson{}
 
-model Assignment{}
+// model Assignment{}
 
-model Attendance{}
+// model Attendance{}
 
-model Results{}
+// model Results{}
 
-model exam{}
+// model exam{}
 
-model Subject{}
+// model Subject{}
 
-model Events{}
+// model Events{}
 
-model Announcement{}
+// model Announcement{}
+
+enum UserGender {
+  Male
+  Female
+}
