@@ -16,3 +16,14 @@ model Admin {
   id String @id
   username String @unique
 }
+
+model Student{}
+model Teacher{}
+model Parent{}
+model Year{}
+model Lesson{}
+model Assignment{}
+model Attendance{}
+model Results{}
+model exam{}
+model Subject{}
