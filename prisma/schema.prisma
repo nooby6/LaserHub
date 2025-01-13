@@ -32,6 +32,8 @@ id       String @id
   createdAt DateTime @default(now())
   parentId String
   parent  Parent @relation(fields: [parentId], references: [id])
+  classId Int
+  class Class @relation(fields: [classId], references: [id])
 }
 
 model Teacher{
@@ -48,6 +50,9 @@ id       String @id
   gender    UserGender
   createdAt DateTime @default(now())
   subjects Subject[]
+  classes Class[]
+
+  Lesson Lesson[]
 }
 
 model Parent{
@@ -64,7 +69,16 @@ model Parent{
   students Student[]
 }
 
-// model Year{}
+model Class{
+   id Int @id @default(autoincrement())
+  name String @unique
+  capacity Int
+
+  SupervisorId String
+  supervisor Teacher @relation(fields: [SupervisorId], references: [id])
+  lessons Lesson[]
+  students Student[]
+}
 
 model Lesson{
   id Int @id @default(autoincrement())
@@ -74,6 +88,10 @@ model Lesson{
 
   subjectId Int
   subject Subject @relation(fields: [subjectId], references: [id])
+  classId Int
+  class Class @relation(fields: [classId], references: [id])
+  teacherId String
+  teacher Teacher @relation(fields: [teacherId], references: [id])
 }
 
 // model Assignment{}
