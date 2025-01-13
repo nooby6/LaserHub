@@ -34,6 +34,9 @@ id       String @id
   parent  Parent @relation(fields: [parentId], references: [id])
   classId Int
   class Class @relation(fields: [classId], references: [id])
+  gradeId Int
+  grade Grade @relation(fields: [gradeId], references: [id])
+
 }
 
 model Teacher{
@@ -78,6 +81,9 @@ model Class{
   supervisor Teacher @relation(fields: [SupervisorId], references: [id])
   lessons Lesson[]
   students Student[]
+
+  gradeId Int
+  grade Grade @relation(fields: [gradeId], references: [id])
 }
 
 model Lesson{
@@ -94,13 +100,28 @@ model Lesson{
   teacher Teacher @relation(fields: [teacherId], references: [id])
 }
 
-// model Assignment{}
+model Assignment{
+  id Int @id @default(autoincrement())
+  
+}
 
 // model Attendance{}
 
 // model Results{}
 
-// model exam{}
+model exam{
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model Grade{
+  id Int @id @default(autoincrement())
+  level String @unique
+
+  students Student[]
+  classes Class[]
+}
+
 
 model Subject{
   id Int @id @default(autoincrement())
