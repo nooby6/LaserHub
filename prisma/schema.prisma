@@ -128,10 +128,10 @@ model Result {
   id          Int @id @default(autoincrement())
   score       Int
 
-  examId      Int
-  exam        Exam @relation(fields: [examId], references: [id])
-  assignmentId Int
-  assignment  Assignment @relation(fields: [assignmentId], references: [id])
+  examId      Int?
+  exam        Exam? @relation(fields: [examId], references: [id])
+  assignmentId Int?
+  assignment  Assignment? @relation(fields: [assignmentId], references: [id])
   
   studentId   String
   student     Student @relation(fields: [studentId], references: [id])
@@ -153,7 +153,7 @@ model Exam {
 // The Grade model represents a grade level with various attributes and relationships.
 model Grade {
   id       Int @id @default(autoincrement())
-  level    String @unique
+  level    Int @unique
 
   students Student[]
   classes  Class[]
