@@ -19,12 +19,12 @@ model Admin {
 model Student {
   id        String @id
   username  String @unique
-  email     String?
+  email     String? @unique
   name      String
   Surname   String
   password  String
   address   String?
-  phone     String?
+  phone     String? @unique
   img       String
   bloodType String
   gender    UserGender
@@ -44,18 +44,19 @@ model Student {
 model Teacher {
   id        String @id
   username  String @unique
-  email     String?
+  email     String? @unique
   name      String
   Surname   String
   password  String
   address   String?
-  phone     String?
+  phone     String @unique
   img       String
   bloodType String
   gender    UserGender
   createdAt DateTime @default(now())
   subjects  Subject[]
   classes   Class[]
+
 
   Lesson Lesson[]
 }
@@ -64,12 +65,12 @@ model Teacher {
 model Parent {
   id        String @id
   username  String @unique
-  email     String?
+  email     String? @unique
   name      String
   Surname   String
   password  String
   address   String?
-  phone     String
+  phone     String @unique
   img       String?
   createdAt DateTime @default(now())
   students  Student[]
