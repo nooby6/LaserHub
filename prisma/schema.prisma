@@ -1,6 +1,5 @@
 // This is my Prisma schema file,
 
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,169 +9,205 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// The Admin model represents an administrator with a unique username.
 model Admin {
   id       String @id
   username String @unique
 }
 
-model Student{
-id       String @id
-  username String @unique
-  email    String?
-  name     String
-  Surname  String
-  password String
-  address  String?
-  phone    String?
-  img      String
+// The Student model represents a student with various attributes and relationships.
+model Student {
+  id        String @id
+  username  String @unique
+  email     String?
+  name      String
+  Surname   String
+  password  String
+  address   String?
+  phone     String?
+  img       String
   bloodType String
   gender    UserGender
   createdAt DateTime @default(now())
-  parentId String
-  parent  Parent @relation(fields: [parentId], references: [id])
-  classId Int
-  class Class @relation(fields: [classId], references: [id])
-  gradeId Int
-  grade Grade @relation(fields: [gradeId], references: [id])
+  parentId  String
+  parent    Parent @relation(fields: [parentId], references: [id])
+  classId   Int
+  class     Class @relation(fields: [classId], references: [id])
+  gradeId   Int
+  grade     Grade @relation(fields: [gradeId], references: [id])
 
   Attendance Attendance[]
-  Results Result[]
+  Results    Result[]
 }
 
-model Teacher{
-id       String @id
-  username String @unique
-  email    String?
-  name     String
-  Surname  String
-  password String
-  address  String?
-  phone    String?
-  img      String
+// The Teacher model represents a teacher with various attributes and relationships.
+model Teacher {
+  id        String @id
+  username  String @unique
+  email     String?
+  name      String
+  Surname   String
+  password  String
+  address   String?
+  phone     String?
+  img       String
   bloodType String
   gender    UserGender
   createdAt DateTime @default(now())
-  subjects Subject[]
-  classes Class[]
+  subjects  Subject[]
+  classes   Class[]
 
   Lesson Lesson[]
 }
 
-model Parent{
-id       String @id
-  username String @unique
-  email    String?
-  name     String
-  Surname  String
-  password String
-  address  String?
-  phone    String
-  img      String?
+// The Parent model represents a parent with various attributes and relationships.
+model Parent {
+  id        String @id
+  username  String @unique
+  email     String?
+  name      String
+  Surname   String
+  password  String
+  address   String?
+  phone     String
+  img       String?
   createdAt DateTime @default(now())
-  students Student[]
+  students  Student[]
 }
 
-model Class{
-id Int @id @default(autoincrement())
-  name String @unique
-  capacity Int
+// The Class model represents a class with various attributes and relationships.
+model Class {
+  id           Int @id @default(autoincrement())
+  name         String @unique
+  capacity     Int
 
   SupervisorId String
-  supervisor Teacher @relation(fields: [SupervisorId], references: [id])
-  lessons Lesson[]
-  students Student[]
+  supervisor   Teacher @relation(fields: [SupervisorId], references: [id])
+  lessons      Lesson[]
+  students     Student[]
 
-  gradeId Int
-  grade Grade @relation(fields: [gradeId], references: [id])
+  gradeId      Int
+  grade        Grade @relation(fields: [gradeId], references: [id])
+
+  Event         Event[]
+  announcements Announcement[]
 }
 
-model Lesson{
-id Int @id @default(autoincrement())
-  name String
+// The Lesson model represents a lesson with various attributes and relationships.
+model Lesson {
+  id        Int @id @default(autoincrement())
+  name      String
   startTime DateTime
-  endTime DateTime
+  endTime   DateTime
 
   subjectId Int
-  subject Subject @relation(fields: [subjectId], references: [id])
-  classId Int
-  class Class @relation(fields: [classId], references: [id])
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  classId   Int
+  class     Class @relation(fields: [classId], references: [id])
   teacherId String
-  teacher Teacher @relation(fields: [teacherId], references: [id])
+  teacher   Teacher @relation(fields: [teacherId], references: [id])
 
   Attendance Attendance[]
 }
 
+// The Attendance model represents attendance records for students in lessons.
 model Attendance {
-  id Int @id @default(autoincrement())
-  date DateTime
-  present Boolean
+  id        Int @id @default(autoincrement())
+  date      DateTime
+  present   Boolean
 
   studentId String
-  student Student @relation(fields: [studentId], references: [id])
-  lessonId Int
-  lesson Lesson @relation(fields: [lessonId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id])
+  lessonId  Int
+  lesson    Lesson @relation(fields: [lessonId], references: [id])
 }
+
+// The Result model represents the results of exams and assignments for students.
 model Result {
-  id Int @id @default(autoincrement())
-  score Int
+  id          Int @id @default(autoincrement())
+  score       Int
 
-  examId Int
-  exam Exam @relation(fields: [examId], references: [id])
+  examId      Int
+  exam        Exam @relation(fields: [examId], references: [id])
   assignmentId Int
-  assignment Assignment @relation(fields: [assignmentId], references: [id])
+  assignment  Assignment @relation(fields: [assignmentId], references: [id])
   
+  studentId   String
+  student     Student @relation(fields: [studentId], references: [id])
 }
 
+// The Exam model represents an exam with various attributes and relationships.
 model Exam {
-  id Int @id @default(autoincrement())
-  title String
+  id        Int @id @default(autoincrement())
+  title     String
   startTime DateTime
-  endTime DateTime
+  endTime   DateTime
 
   subjectId Int
-  subject Subject @relation(fields: [subjectId], references: [id])
+  subject   Subject @relation(fields: [subjectId], references: [id])
 
-  Results Results[]
+  Results   Result[]
 }
 
-model Grade{
-  id Int @id @default(autoincrement())
-  level String @unique
+// The Grade model represents a grade level with various attributes and relationships.
+model Grade {
+  id       Int @id @default(autoincrement())
+  level    String @unique
 
   students Student[]
-  classes Class[]
+  classes  Class[]
 }
 
+// The Subject model represents a subject with various attributes and relationships.
+model Subject {
+  id          Int @id @default(autoincrement())
+  name        String @unique
+  teachers    Teacher[]
+  lessons     Lesson[]
 
-model Subject{
-  id Int @id @default(autoincrement())
-  name String @unique
-  teachers Teacher[]
-  lessons Lesson[]
-
-  Exam Exam[]
+  Exam        Exam[]
   assignments Assignment[]
 }
 
-// model Events{}
+// The Event model represents an event with various attributes and relationships.
+model Event {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String
 
-model Assignment {
-  id Int @id @default(autoincrement())
-  title String
-  startTime DateTime
-  dueTime DateTime
-
-  subjectId Int
-  subject Subject @relation(fields: [subjectId], references: [id])
-  results Results[]
+  classId     Int
+  class       Class @relation(fields: [classId], references: [id])
 }
 
+// The Announcement model represents an announcement with various attributes and relationships.
+model Announcement {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String
 
+  classId     Int
+  class       Class @relation(fields: [classId], references: [id])
+}
+
+// The Assignment model represents an assignment with various attributes and relationships.
+model Assignment {
+  id          Int @id @default(autoincrement())
+  title       String
+  startTime   DateTime
+  dueTime     DateTime
+
+  subjectId   Int
+  subject     Subject @relation(fields: [subjectId], references: [id])
+  results     Result[]
+}
+
+// The UserGender enum represents the gender of a user.
 enum UserGender {
   Male
   Female
 }
 
+// The Day enum represents the days of the week.
 enum Day {
   Monday
   Tuesday
