@@ -35,6 +35,8 @@ id       String @id
   gradeId Int
   grade Grade @relation(fields: [gradeId], references: [id])
 
+  Attendance Attendance[]
+  Results Result[]
 }
 
 model Teacher{
@@ -57,7 +59,7 @@ id       String @id
 }
 
 model Parent{
-  id       String @id
+id       String @id
   username String @unique
   email    String?
   name     String
@@ -71,7 +73,7 @@ model Parent{
 }
 
 model Class{
-   id Int @id @default(autoincrement())
+id Int @id @default(autoincrement())
   name String @unique
   capacity Int
 
@@ -85,7 +87,7 @@ model Class{
 }
 
 model Lesson{
-  id Int @id @default(autoincrement())
+id Int @id @default(autoincrement())
   name String
   startTime DateTime
   endTime DateTime
@@ -96,11 +98,31 @@ model Lesson{
   class Class @relation(fields: [classId], references: [id])
   teacherId String
   teacher Teacher @relation(fields: [teacherId], references: [id])
+
+  Attendance Attendance[]
 }
 
-// model Attendance{}
+model Attendance {
+  id Int @id @default(autoincrement())
+  date DateTime
+  present Boolean
 
-// model Results{}
+  studentId String
+  student Student @relation(fields: [studentId], references: [id])
+  lessonId Int
+  lesson Lesson @relation(fields: [lessonId], references: [id])
+}
+model Result {
+  id Int @id @default(autoincrement())
+  score Int
+
+  examId Int
+  exam Exam @relation(fields: [examId], references: [id])
+  assignmentId Int
+  assignment Assignment @relation(fields: [assignmentId], references: [id])
+  
+}
+
 model Exam {
   id Int @id @default(autoincrement())
   title String
@@ -109,6 +131,8 @@ model Exam {
 
   subjectId Int
   subject Subject @relation(fields: [subjectId], references: [id])
+
+  Results Results[]
 }
 
 model Grade{
@@ -140,7 +164,9 @@ model Assignment {
 
   subjectId Int
   subject Subject @relation(fields: [subjectId], references: [id])
+  results Results[]
 }
+
 
 enum UserGender {
   Male
