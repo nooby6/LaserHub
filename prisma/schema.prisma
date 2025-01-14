@@ -101,7 +101,6 @@ model Lesson{
 // model Attendance{}
 
 // model Results{}
-
 model Exam {
   id Int @id @default(autoincrement())
   title String
