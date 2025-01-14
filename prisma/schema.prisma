@@ -1,7 +1,5 @@
 // This is my Prisma schema file,
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
@@ -100,18 +98,18 @@ model Lesson{
   teacher Teacher @relation(fields: [teacherId], references: [id])
 }
 
-model Assignment{
-  id Int @id @default(autoincrement())
-  
-}
-
 // model Attendance{}
 
 // model Results{}
 
-model exam{
+model Exam {
   id Int @id @default(autoincrement())
-  name String
+  title String
+  startTime DateTime
+  endTime DateTime
+
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
 }
 
 model Grade{
@@ -128,11 +126,22 @@ model Subject{
   name String @unique
   teachers Teacher[]
   lessons Lesson[]
+
+  Exam Exam[]
+  assignments Assignment[]
 }
 
 // model Events{}
 
-// model Announcement{}
+model Assignment {
+  id Int @id @default(autoincrement())
+  title String
+  startTime DateTime
+  dueTime DateTime
+
+  subjectId Int
+  subject Subject @relation(fields: [subjectId], references: [id])
+}
 
 enum UserGender {
   Male
