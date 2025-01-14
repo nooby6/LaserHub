@@ -109,9 +109,11 @@ model Assignment{
 
 // model Results{}
 
-model exam{
+model Exam {
   id Int @id @default(autoincrement())
-  name String
+  title String
+  startTime DateTime
+  endTime DateTime
 }
 
 model Grade{
@@ -132,7 +134,10 @@ model Subject{
 
 // model Events{}
 
-// model Announcement{}
+model Assignment {
+  id Int @id @default(autoincrement())
+  title String
+}
 
 enum UserGender {
   Male
