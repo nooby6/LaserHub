@@ -2,7 +2,7 @@ import { Day, PrismaClient, UserSex } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // ADMIN
+  // Create an admin user
   await prisma.admin.create({
     data: {
       id: "admin1",
@@ -13,7 +13,7 @@ async function main() {
     },
   });
 
-  // GRADE (Create grades first)
+  // Create grades
   const grades = [];
   for (let i = 1; i <= 6; i++) {
     const grade = await prisma.grade.create({
@@ -24,7 +24,7 @@ async function main() {
     grades.push(grade); // Store created grades
   }
 
-  // CLASS (Ensure grades exist before creating classes)
+  // Create classes and associate them with grades
   for (let i = 1; i <= 13; i++) {
     await prisma.class.create({
       data: {
@@ -35,7 +35,7 @@ async function main() {
     });
   }
 
-  // SUBJECT
+  // Create subjects
   const subjectData = [
     { name: "Mathematics" },
     { name: "Science" },
@@ -53,7 +53,7 @@ async function main() {
     await prisma.subject.create({ data: subject });
   }
 
-  // TEACHER
+  // Create teachers and associate them with subjects and classes
   for (let i = 1; i <= 15; i++) {
     await prisma.teacher.create({
       data: {
@@ -73,7 +73,7 @@ async function main() {
     });
   }
 
-  // LESSON
+  // Create lessons and associate them with subjects, classes, and teachers
   for (let i = 1; i <= 30; i++) {
     await prisma.lesson.create({
       data: {
@@ -92,7 +92,7 @@ async function main() {
     });
   }
 
-  // PARENT
+  // Create parents
   for (let i = 1; i <= 25; i++) {
     await prisma.parent.create({
       data: {
@@ -107,7 +107,7 @@ async function main() {
     });
   }
 
-  // STUDENT
+  // Create students and associate them with parents, grades, and classes
   for (let i = 1; i <= 50; i++) {
     await prisma.student.create({
       data: {
@@ -128,7 +128,7 @@ async function main() {
     });
   }
 
-  // EXAM
+  // Create exams and associate them with lessons
   for (let i = 1; i <= 10; i++) {
     await prisma.exam.create({
       data: {
@@ -140,7 +140,7 @@ async function main() {
     });
   }
 
-  // ASSIGNMENT
+  // Create assignments and associate them with lessons
   for (let i = 1; i <= 10; i++) {
     await prisma.assignment.create({
       data: {
@@ -152,7 +152,7 @@ async function main() {
     });
   }
 
-  // RESULT
+  // Create results and associate them with students and exams/assignments
   for (let i = 1; i <= 10; i++) {
     await prisma.result.create({
       data: {
@@ -163,7 +163,7 @@ async function main() {
     });
   }
 
-  // ATTENDANCE
+  // Create attendance records and associate them with students and lessons
   for (let i = 1; i <= 10; i++) {
     await prisma.attendance.create({
       data: {
@@ -175,7 +175,7 @@ async function main() {
     });
   }
 
-  // EVENT
+  // Create events and associate them with classes
   for (let i = 1; i <= 5; i++) {
     await prisma.event.create({
       data: {
@@ -188,7 +188,7 @@ async function main() {
     });
   }
 
-  // ANNOUNCEMENT
+  // Create announcements and associate them with classes
   for (let i = 1; i <= 5; i++) {
     await prisma.announcement.create({
       data: {
