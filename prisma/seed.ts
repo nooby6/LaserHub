@@ -1,4 +1,4 @@
-import { Day, PrismaClient, UserSex } from "@prisma/client";
+import { Day, PrismaClient, UserGender } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -67,7 +67,7 @@ async function main() {
                 phone: `123-456-789${i}`,
                 address: `Address${i}`,
                 bloodType: "A+",
-                sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
+                sex: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
                 subjects: { connect: [{ id: (i % 10) + 1 }] }, // Connect teacher to a subject
                 classes: { connect: [{ id: (i % 6) + 1 }] }, // Connect teacher to a class
                 birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 30)), // Set birthday 30 years ago
@@ -121,7 +121,7 @@ async function main() {
                 phone: `987-654-321${i}`,
                 address: `Address${i}`,
                 bloodType: "O-",
-                sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
+                sex: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
                 parentId: `parentId${Math.ceil(i / 2) % 25 || 25}`, // Connect to a parent
                 gradeId: (i % 6) + 1, // Connect to a grade
                 classId: (i % 6) + 1, // Connect to a class
