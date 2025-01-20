@@ -1,7 +1,11 @@
 /// The `Admin` model represents an administrator with a unique username.
 model Admin {
-  id       String @id
+  id       Int @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
   username String @unique
+  createdAt DateTime @default(now())
 }
 
 /// The `Student` model represents a student with personal details, 
