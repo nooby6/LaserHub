@@ -1,6 +1,6 @@
 /// The `Admin` model represents an administrator with a unique username.
 model Admin {
-  id       Int @id @default(autoincrement())
+  id       String @id 
   name     String
   email    String @unique
   password String
