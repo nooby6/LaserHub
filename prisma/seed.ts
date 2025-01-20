@@ -1,4 +1,5 @@
-import { Day, PrismaClient, UserGender } from "@prisma/client";
+import { Lesson } from './../node_modules/.prisma/client/index.d';
+import { PrismaClient, UserGender } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
@@ -7,6 +8,7 @@ async function main() {
         data: {
             id: "admin1",
             username: "admin1",
+            password: `password${i}`,
         },
     });
     await prisma.admin.create({
@@ -66,8 +68,10 @@ async function main() {
                 email: `teacher${i}@example.com`,
                 phone: `123-456-789${i}`,
                 address: `Address${i}`,
+                password: `password${i}`,
                 bloodType: "A+",
-                gender: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
+                gender: i % 2 === 0 ? UserGender.Male : UserGender.Female,
+                img: `img${i}.jpg`, // Add the missing img property
                 subjects: { connect: [{ id: (i % 10) + 1 }] }, // Connect teacher to a subject
                 classes: { connect: [{ id: (i % 6) + 1 }] }, // Connect teacher to a class
                 // birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 30)), // Set birthday 30 years ago
@@ -80,11 +84,6 @@ async function main() {
         await prisma.lesson.create({
             data: {
                 name: `Lesson${i}`, 
-                day: Day[
-                    Object.keys(Day)[
-                        Math.floor(Math.random() * Object.keys(Day).length)
-                    ] as keyof typeof Day
-                ], // Random day of the week
                 startTime: new Date(new Date().setHours(new Date().getHours() + 1)), // Start time 1 hour from now
                 endTime: new Date(new Date().setHours(new Date().getHours() + 3)), // End time 3 hours from now
                 subjectId: (i % 10) + 1, // Connect to a subject
@@ -137,6 +136,7 @@ async function main() {
                 title: `Exam ${i}`, 
                 startTime: new Date(new Date().setHours(new Date().getHours() + 1)), // Start time 1 hour from now
                 endTime: new Date(new Date().setHours(new Date().getHours() + 2)), // End time 2 hours from now
+                subject: { connect: { id: (i % 10) + 1 } }, // Connect to a subject
                 // lessonId: (i % 30) + 1, // Connect to a lesson
             },
         });
@@ -148,8 +148,9 @@ async function main() {
             data: {
                 title: `Assignment ${i}`, 
                 startTime: new Date(new Date().setHours(new Date().getHours() + 1)), // Start time 1 hour from now
-                dueDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Due date 1 day from now
-                lessonId: (i % 30) + 1, // Connect to a lesson
+                dueTime: new Date(new Date().setDate(new Date().getDate() + 1)), // Due date 1 day from now
+                subject: { connect: { id: (i % 10) + 1 } }, // Connect to a subject
+                // lessonId: (i % 30) + 1, // Connect to a lesson
             },
         });
     }
