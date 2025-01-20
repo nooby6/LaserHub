@@ -15,7 +15,7 @@ async function main() {
 
   // Create grades
   const grades = [];
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 13; i++) {
     const grade = await prisma.grade.create({
       data: {
         level: i,
@@ -29,7 +29,7 @@ async function main() {
     await prisma.class.create({
       data: {
         name: `${i}A`, 
-        gradeId: grades[i % 6].id, // Use the gradeId from the created grades
+        gradeId: grades[i % 13].id, // Use the gradeId from the created grades
         capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
       },
     });
@@ -121,7 +121,7 @@ async function main() {
         bloodType: "O-",
         sex: i % 2 === 0 ? UserSex.MALE : UserSex.FEMALE,
         parentId: `parentId${Math.ceil(i / 2) % 25 || 25}`,
-        gradeId: (i % 6) + 1,
+        gradeId: (i % 13) + 1,
         classId: (i % 6) + 1,
         birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 10)),
       },

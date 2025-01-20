@@ -75,6 +75,8 @@ model Grade {
 
   students  Student[]
  // classes   Class[]   @relation("ClassGrade")
+
+  Class Class[] @relation("ClassGrade")
 }
 
 /// The `Class` model represents a class with a unique name, capacity, 
@@ -88,7 +90,7 @@ model Class {
   lessons       Lesson[]
   students      Student[]
   gradeId       Int
-  // grade         Grade      @relation("ClassGrade", fields: [gradeId], references: [id])
+  grade         Grade      @relation("ClassGrade", fields: [gradeId], references: [id])
   events        Event[]
   announcements Announcement[]
 }
