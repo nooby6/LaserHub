@@ -7,34 +7,31 @@ async function main() {
     data: {
       id: "admin1",
       username: "admin1",
+      name: "Admin One",
+      email: "admin1@example.com",
+      password: "password1",
     },
   });
-  await prisma.admin.create({
+
+ // GRADE
+for (let i = 1; i <= 6; i++) {
+  await prisma.grade.create({
     data: {
-      id: "admin2",
-      username: "admin2",
+      level: i,
     },
   });
+}
 
-  // GRADE
-  for (let i = 1; i <= 6; i++) {
-    await prisma.grade.create({
-      data: {
-        level: i,
-      },
-    });
-  }
-
-  // CLASS
-  for (let i = 1; i <= 13; i++) {
-    await prisma.class.create({
-      data: {
-        name: `${i}A`, 
-        gradeId: i, 
-        capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
-      },
-    });
-  }
+// CLASS (Ensure Grade exists before creating classes)
+for (let i = 1; i <= 13; i++) {
+  await prisma.class.create({
+    data: {
+      name: `${i}A`, 
+      gradeId: i,  // Make sure this matches the created grade IDs
+      capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
+    },
+  });
+}
 
   // SUBJECT
   const subjectData = [

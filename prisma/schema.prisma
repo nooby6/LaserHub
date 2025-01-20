@@ -2,7 +2,7 @@
 model Admin {
   id       String @id 
   name     String
-  email    String @unique
+  email    String?  @unique
   password String
   username String @unique
   createdAt DateTime @default(now())
@@ -70,26 +70,25 @@ model Parent {
 /// The `Grade` model represents a grade level with a unique level 
 /// and relationships to students and classes.
 model Grade {
-  id    Int @id @default(autoincrement())
-  level Int @unique
+  id        Int       @id @default(autoincrement())
+  level     Int       @unique
 
-  students Student[]
-  classess Class[]
+  students  Student[]
+ // classes   Class[]   @relation("ClassGrade")
 }
 
 /// The `Class` model represents a class with a unique name, capacity, 
 /// relationships to supervisor, lessons, students, grade, events, and announcements.
 model Class {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
-  capacity Int
-
+  id            Int        @id @default(autoincrement())
+  name          String     @unique
+  capacity      Int
   supervisorId  String?
-  supervisor    Teacher?       @relation(fields: [supervisorId], references: [id])
+  supervisor    Teacher?   @relation(fields: [supervisorId], references: [id])
   lessons       Lesson[]
   students      Student[]
   gradeId       Int
-  grade         Grade          @relation(fields: [gradeId], references: [id])
+  // grade         Grade      @relation("ClassGrade", fields: [gradeId], references: [id])
   events        Event[]
   announcements Announcement[]
 }
