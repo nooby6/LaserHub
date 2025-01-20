@@ -62,15 +62,15 @@ async function main() {
                 id: `teacher${i}`, // Unique ID for the teacher
                 username: `teacher${i}`,
                 name: `TName${i}`,
-                surname: `TSurname${i}`,
+                Surname: `TSurname${i}`,
                 email: `teacher${i}@example.com`,
                 phone: `123-456-789${i}`,
                 address: `Address${i}`,
                 bloodType: "A+",
-                sex: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
+                gender: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
                 subjects: { connect: [{ id: (i % 10) + 1 }] }, // Connect teacher to a subject
                 classes: { connect: [{ id: (i % 6) + 1 }] }, // Connect teacher to a class
-                birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 30)), // Set birthday 30 years ago
+                // birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 30)), // Set birthday 30 years ago
             },
         });
     }
@@ -101,7 +101,7 @@ async function main() {
                 id: `parentId${i}`,
                 username: `parentId${i}`,
                 name: `PName ${i}`,
-                surname: `PSurname ${i}`,
+                Surname: `PSurname ${i}`,
                 email: `parent${i}@example.com`,
                 phone: `123-456-789${i}`,
                 address: `Address${i}`,
@@ -116,16 +116,16 @@ async function main() {
                 id: `student${i}`, 
                 username: `student${i}`, 
                 name: `SName${i}`,
-                surname: `SSurname ${i}`,
+                Surname: `SSurname ${i}`,
                 email: `student${i}@example.com`,
                 phone: `987-654-321${i}`,
                 address: `Address${i}`,
                 bloodType: "O-",
-                sex: i % 2 === 0 ? UserGender.MALE : UserGender.FEMALE,
+                gender: i % 2 === 0 ? UserGender.Male : UserGender.Female,
                 parentId: `parentId${Math.ceil(i / 2) % 25 || 25}`, // Connect to a parent
                 gradeId: (i % 6) + 1, // Connect to a grade
                 classId: (i % 6) + 1, // Connect to a class
-                birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 10)), // Set birthday 10 years ago
+               // birthday: new Date(new Date().setFullYear(new Date().getFullYear() - 10)), // Set birthday 10 years ago
             },
         });
     }
@@ -137,7 +137,7 @@ async function main() {
                 title: `Exam ${i}`, 
                 startTime: new Date(new Date().setHours(new Date().getHours() + 1)), // Start time 1 hour from now
                 endTime: new Date(new Date().setHours(new Date().getHours() + 2)), // End time 2 hours from now
-                lessonId: (i % 30) + 1, // Connect to a lesson
+                // lessonId: (i % 30) + 1, // Connect to a lesson
             },
         });
     }
@@ -147,7 +147,7 @@ async function main() {
         await prisma.assignment.create({
             data: {
                 title: `Assignment ${i}`, 
-                startDate: new Date(new Date().setHours(new Date().getHours() + 1)), // Start date 1 hour from now
+                startTime: new Date(new Date().setHours(new Date().getHours() + 1)), // Start time 1 hour from now
                 dueDate: new Date(new Date().setDate(new Date().getDate() + 1)), // Due date 1 day from now
                 lessonId: (i % 30) + 1, // Connect to a lesson
             },
