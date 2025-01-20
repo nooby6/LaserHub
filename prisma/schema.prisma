@@ -1,222 +1,214 @@
-// This is my Prisma schema file,
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// The Admin model represents an administrator with a unique username.
+/// The `Admin` model represents an administrator with a unique username.
 model Admin {
   id       String @id
   username String @unique
 }
 
-// The Student model represents a student with various attributes and relationships.
+/// The `Student` model represents a student with personal details, 
+/// relationships to parent, class, grade, attendances, and results.
 model Student {
-  id        String @id
-  username  String @unique
-  email     String? @unique
-  name      String
-  Surname   String
-  password  String
-  address   String?
-  phone     String? @unique
-  img       String
-  bloodType String
-  gender    UserGender
-  createdAt DateTime @default(now())
-  parentId  String
-  parent    Parent @relation(fields: [parentId], references: [id])
-  classId   Int
-  class     Class @relation(fields: [classId], references: [id])
-  gradeId   Int
-  grade     Grade @relation(fields: [gradeId], references: [id])
-
-  Attendance Attendance[]
-  Results    Result[]
+  id          String       @id
+  username    String       @unique
+  name        String
+  surname     String
+  email       String?      @unique
+  phone       String?      @unique
+  address     String
+  img         String?
+  bloodType   String
+  sex         UserSex
+  createdAt   DateTime     @default(now())
+  parentId    String
+  parent      Parent       @relation(fields: [parentId], references: [id])
+  classId     Int
+  class       Class        @relation(fields: [classId], references: [id])
+  gradeId     Int
+  grade       Grade        @relation(fields: [gradeId], references: [id])
+  attendances Attendance[]
+  results     Result[]
+  birthday    DateTime
 }
 
-// The Teacher model represents a teacher with various attributes and relationships.
+/// The `Teacher` model represents a teacher with personal details, 
+/// relationships to subjects, lessons, and classes.
 model Teacher {
-  id        String @id
-  username  String @unique
-  email     String? @unique
+  id        String    @id
+  username  String    @unique
   name      String
-  Surname   String
-  password  String
-  address   String?
-  phone     String @unique
-  img       String
+  surname   String
+  email     String?   @unique
+  phone     String?   @unique
+  address   String
+  img       String?
   bloodType String
-  gender    UserGender
-  createdAt DateTime @default(now())
+  sex       UserSex
+  createdAt DateTime  @default(now())
   subjects  Subject[]
+  lessons   Lesson[]
   classes   Class[]
-
-
-  Lesson Lesson[]
+  birthday  DateTime
 }
 
-// The Parent model represents a parent with various attributes and relationships.
+/// The `Parent` model represents a parent with personal details 
+/// and a relationship to students.
 model Parent {
-  id        String @id
-  username  String @unique
-  email     String? @unique
+  id        String    @id
+  username  String    @unique
   name      String
-  Surname   String
-  password  String
-  address   String?
-  phone     String @unique
-  img       String?
-  createdAt DateTime @default(now())
+  surname   String
+  email     String?   @unique
+  phone     String    @unique
+  address   String
+  createdAt DateTime  @default(now())
   students  Student[]
 }
 
-// The Class model represents a class with various attributes and relationships.
+/// The `Grade` model represents a grade level with a unique level 
+/// and relationships to students and classes.
+model Grade {
+  id    Int @id @default(autoincrement())
+  level Int @unique
+
+  students Student[]
+  classess Class[]
+}
+
+/// The `Class` model represents a class with a unique name, capacity, 
+/// relationships to supervisor, lessons, students, grade, events, and announcements.
 model Class {
-  id           Int @id @default(autoincrement())
-  name         String @unique
-  capacity     Int
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  capacity Int
 
-  supervisorId String?
-  supervisor   Teacher? @relation(fields: [supervisorId], references: [id])
-  lessons      Lesson[]
-  students     Student[]
-
-  gradeId      Int
-  grade        Grade @relation(fields: [gradeId], references: [id])
-
-  Event         Event[]
+  supervisorId  String?
+  supervisor    Teacher?       @relation(fields: [supervisorId], references: [id])
+  lessons       Lesson[]
+  students      Student[]
+  gradeId       Int
+  grade         Grade          @relation(fields: [gradeId], references: [id])
+  events        Event[]
   announcements Announcement[]
 }
 
-// The Lesson model represents a lesson with various attributes and relationships.
+/// The `Subject` model represents a subject with a unique name 
+/// and relationships to teachers and lessons.
+model Subject {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  teachers Teacher[]
+  lessons  Lesson[]
+}
+
+/// The `Lesson` model represents a lesson with details such as name, day, 
+/// start and end time, and relationships to subject, class, teacher, exams, 
+/// assignments, and attendances.
 model Lesson {
-  id        Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
+  day       Day
   startTime DateTime
   endTime   DateTime
 
-  subjectId Int
-  subject   Subject @relation(fields: [subjectId], references: [id])
-  classId   Int
-  class     Class @relation(fields: [classId], references: [id])
-  teacherId String
-  teacher   Teacher @relation(fields: [teacherId], references: [id])
-
-  Attendance Attendance[]
+  subjectId   Int
+  subject     Subject      @relation(fields: [subjectId], references: [id])
+  classId     Int
+  class       Class        @relation(fields: [classId], references: [id])
+  teacherId   String
+  teacher     Teacher      @relation(fields: [teacherId], references: [id])
+  exams       Exam[]
+  assignments Assignment[]
+  attendances Attendance[]
 }
 
-// The Attendance model represents attendance records for students in lessons.
-model Attendance {
-  id        Int @id @default(autoincrement())
-  date      DateTime
-  present   Boolean
-
-  studentId String
-  student   Student @relation(fields: [studentId], references: [id])
-  lessonId  Int
-  lesson    Lesson @relation(fields: [lessonId], references: [id])
-}
-
-// The Result model represents the results of exams and assignments for students.
-model Result {
-  id          Int @id @default(autoincrement())
-  score       Int
-
-  examId      Int?
-  exam        Exam? @relation(fields: [examId], references: [id])
-  assignmentId Int?
-  assignment  Assignment? @relation(fields: [assignmentId], references: [id])
-  
-  studentId   String
-  student     Student @relation(fields: [studentId], references: [id])
-}
-
-// The Exam model represents an exam with various attributes and relationships.
+/// The `Exam` model represents an exam with details such as title, 
+/// start and end time, and relationships to lesson and results.
 model Exam {
-  id        Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
   startTime DateTime
   endTime   DateTime
 
-  subjectId Int
-  subject   Subject @relation(fields: [subjectId], references: [id])
-
-  Results   Result[]
+  lessonId Int
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  results  Result[]
 }
 
-// The Grade model represents a grade level with various attributes and relationships.
-model Grade {
-  id       Int @id @default(autoincrement())
-  level    Int @unique
+/// The `Assignment` model represents an assignment with details such as title, 
+/// start and due date, and relationships to lesson and results.
+model Assignment {
+  id        Int      @id @default(autoincrement())
+  title     String
+  startDate DateTime
+  dueDate   DateTime
 
-  students Student[]
-  classes  Class[]
+  lessonId Int
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  results  Result[]
 }
 
-// The Subject model represents a subject with various attributes and relationships.
-model Subject {
-  id          Int @id @default(autoincrement())
-  name        String @unique
-  teachers    Teacher[]
-  lessons     Lesson[]
+/// The `Result` model represents a result with a score and relationships 
+/// to exam, assignment, and student.
+model Result {
+  id    Int @id @default(autoincrement())
+  score Int
 
-  Exam        Exam[]
-  assignments Assignment[]
+  examId       Int?
+  exam         Exam?       @relation(fields: [examId], references: [id])
+  assignmentId Int?
+  assignment   Assignment? @relation(fields: [assignmentId], references: [id])
+  studentId    String
+  student      Student     @relation(fields: [studentId], references: [id])
 }
 
-// The Event model represents an event with various attributes and relationships.
+/// The `Attendance` model represents an attendance record with a date, 
+/// present status, and relationships to student and lesson.
+model Attendance {
+  id      Int      @id @default(autoincrement())
+  date    DateTime
+  present Boolean
+
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+  lessonId  Int
+  lesson    Lesson  @relation(fields: [lessonId], references: [id])
+}
+
+/// The `Event` model represents an event with details such as title, 
+/// description, start and end time, and an optional relationship to a class.
 model Event {
-  id          Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   startTime   DateTime
   endTime     DateTime
 
-  classId     Int
-  class       Class @relation(fields: [classId], references: [id])
+  classId Int?
+  class   Class? @relation(fields: [classId], references: [id])
 }
 
-// The Announcement model represents an announcement with various attributes and relationships.
+/// The `Announcement` model represents an announcement with details such as title, 
+/// description, date, and an optional relationship to a class.
 model Announcement {
-  id          Int @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   date        DateTime
 
-  classId     Int
-  class       Class @relation(fields: [classId], references: [id])
+  classId Int?
+  class   Class? @relation(fields: [classId], references: [id])
 }
 
-// The Assignment model represents an assignment with various attributes and relationships.
-model Assignment {
-  id          Int @id @default(autoincrement())
-  title       String
-  startTime   DateTime
-  dueTime     DateTime
-
-  subjectId   Int
-  subject     Subject @relation(fields: [subjectId], references: [id])
-  results     Result[]
+/// The `UserSex` enum represents the gender of a user.
+enum UserSex {
+  MALE
+  FEMALE
 }
 
-// The UserGender enum represents the gender of a user.
-enum UserGender {
-  Male
-  Female
-}
-
-// The Day enum represents the days of the week.
+/// The `Day` enum represents the days of the week.
 enum Day {
-  Monday
-  Tuesday
-  Wednesday
-  Thursday
-  Friday
-  Saturday
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
 }
