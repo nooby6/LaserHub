@@ -1,6 +1,6 @@
 "use client";
 
-import { ITEM_PER_PAGE } from "../lib/setings";
+import { ITEM_PER_PAGE } from "../lib/settings";
 import { useRouter } from "next/navigation";
 import React from "react";
 
