@@ -1,6 +1,7 @@
 import Image from "next/image";
 import AttendanceChart from "./AttendanceChart";
-import prisma from "@/lib/prisma";
+import prisma from "../lib/prisma";
+import React from "react";
 
 // Define the AttendanceChartContainer component as an async function
 const AttendanceChartContainer = async () => {

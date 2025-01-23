@@ -1,9 +1,9 @@
-import Announcements from "@/components/Announcements";
-import AttendanceChartContainer from "@/components/AttendanceChartContainer";
-import CountChartContainer from "@/components/CountChartContainer";
-import EventCalendarContainer from "@/components/EventCalendarContainer";
-import FinanceChart from "@/components/FinanceChart";
-import UserCard from "../../components/UserCard";
+import Announcements from "../../../components/Announcements";
+import AttendanceChartContainer from "../../../components/Attendance ChartContainer";
+import CountChartContainer from "../../../components/CountChartContainer";
+import EventCalendarContainer from "../../../components/EventCalenderContainer";
+import FinanceChart from "../../../components/FinanceChart";
+import UserCard from "../../../components/UserCard";
 import React from "react";
 
 // AdminPage component
