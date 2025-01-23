@@ -79,6 +79,8 @@ type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
  * 
  * @param {number} p - The current page number.
  */
+
+
 const TeacherListPage = async ({
   searchParams,
 }: {
