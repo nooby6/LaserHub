@@ -1,8 +1,8 @@
-import Announcements from "@/components/Announcements";
-import BigCalendarContainer from "@/components/BigCalendarContainer";
-import BigCalendar from "@/components/BigCalender";
-import EventCalendar from "@/components/EventCalendar";
-import prisma from "@/lib/prisma";
+import Announcements from "../../../components/Announcements";
+import BigCalendarContainer from "../../../components/BigCalenderContainer";
+import BigCalendar from "../../../components/BigCalenderContainer";
+import EventCalendar from "../../../components/EventCalender";
+import prisma from "../../../lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
