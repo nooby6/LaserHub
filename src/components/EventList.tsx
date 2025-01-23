@@ -1,5 +1,5 @@
 import React from "react";
-import prisma from "../lib/prisma";
+import prisma from "../src/lib/prisma";
 
 /**
  * Fetches and displays a list of events for a given date.

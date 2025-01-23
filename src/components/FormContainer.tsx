@@ -1,5 +1,5 @@
-import prisma from "../lib/prisma";
-import FormModal from "../components/FormModal";
+import prisma from "../src/lib/prisma";
+import FormModal from "./FormModal";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import prisma from "../lib/prisma";
+import prisma from "../src/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
 // Announcements component

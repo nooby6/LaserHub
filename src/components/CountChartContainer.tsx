@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CountChart from "./CountChart";
-import prisma from "../lib/prisma";
+import prisma from "../src/lib/prisma";
 import React from "react";
 
 /**
