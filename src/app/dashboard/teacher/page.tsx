@@ -1,5 +1,5 @@
-import Announcements from "@components/Announcements";
-import BigCalendarContainer from "@/components/BigCalendarContainer";
+import Announcements from "../../../components/Announcements";
+import BigCalendarContainer from "../../../components/BigCalenderContainer";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
