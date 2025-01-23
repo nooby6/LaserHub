@@ -1,13 +1,14 @@
-import FormContainer from "@/components/FormContainer";
-import Pagination from "@/components/Pagination";
+import FormContainer from "../../../components/FormContainer";
+import Pagination from "../../../components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import prisma from "@/lib/prisma";
+import prisma from "../../../lib/prisma";
 import { Class, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { ITEM_PER_PAGE } from "@/lib/settings";
 import { auth } from "@clerk/nextjs/server";
+import React from "react";
 
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
