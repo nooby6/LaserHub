@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Language and Environment */
     "target": "es2016", /* Set the JavaScript language version for emitted JavaScript. */
-    "module": "commonjs", /* Specify what module code is generated. */
+    "module": "esnext", /* Specify what module code is generated. */
     "jsx": "preserve", /* Specify JSX code generation for React. */
     "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. */
     "forceConsistentCasingInFileNames": true, /* Ensure correct casing in imports. */
@@ -16,7 +16,7 @@
     "skipLibCheck": true,
     "noEmit": true,
     "incremental": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "plugins": [
