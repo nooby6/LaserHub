@@ -1,13 +1,36 @@
 {
   "compilerOptions": {
     /* Language and Environment */
-    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
-    "jsx": "react",                                      /* Specify JSX code generation for React. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure correct casing in imports. */
-    "strict": true                                       /* Enable all strict type-checking options. */
+    "target": "es2016", /* Set the JavaScript language version for emitted JavaScript. */
+    "module": "commonjs", /* Specify what module code is generated. */
+    "jsx": "preserve", /* Specify JSX code generation for React. */
+    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "forceConsistentCasingInFileNames": true, /* Ensure correct casing in imports. */
+    "strict": true /* Enable all strict type-checking options. */,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src"],                                    /* Specify the source files to include in the compilation. */
-  "exclude": ["node_modules", "dist"]                    /* Exclude unnecessary files and directories. */
+  "include": [
+    "src",
+    ".next/types/**/*.ts"
+  ], /* Specify the source files to include in the compilation. */
+  "exclude": [
+    "node_modules",
+    "dist"
+  ] /* Exclude unnecessary files and directories. */
 }
